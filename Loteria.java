@@ -5,6 +5,10 @@ import java.util.List;
 import java.util.Random;
 
 public class Loteria {
+    private static final int MIN_NUMERO = 1;
+    private static final int MAX_NUMERO = 60;
+    private static final int NUMEROS_SORTEIO = 6;
+
     public double calcularPremio(List<Integer> numerosEscolhidos, double valorAposta) {
         if (!validarNumeros(numerosEscolhidos)) {
             return 0.0;
@@ -18,12 +22,12 @@ public class Loteria {
     }
 
     private boolean validarNumeros(List<Integer> numeros) {
-        if (numeros.size() < 6 || numeros.size() > 15) {
+        if (numeros.size() < NUMEROS_SORTEIO || numeros.size() > MAX_NUMERO) {
             return false;
         }
 
         for (Integer numero : numeros) {
-            if (numero < 1 || numero > 60) {
+            if (numero < MIN_NUMERO || numero > MAX_NUMERO) {
                 return false;
             }
         }
@@ -35,11 +39,9 @@ public class Loteria {
         List<Integer> numerosSorteados = new ArrayList<>();
         Random random = new Random();
 
-        while (numerosSorteados.size() < 6) {
-            int numero = random.nextInt(60) + 1;
-            if (!numerosSorteados.contains(numero)) {
-                numerosSorteados.add(numero);
-            }
+        while (numerosSorteados.size() < NUMEROS_SORTEIO) {
+            int numero = random.nextInt(MAX_NUMERO) + MIN_NUMERO;
+            numerosSorteados.add(numero);
         }
 
         return numerosSorteados;
